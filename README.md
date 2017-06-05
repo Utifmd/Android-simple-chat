@@ -10,3 +10,4 @@
  * [x] add create adapters
  * [] create all the Activities
  * [] build and run the project
+ * [] done.

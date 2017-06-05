@@ -5,11 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.app.utif.android_simple_chat.adapter.AdapterUsr;
+import com.app.utif.android_simple_chat.auth.AuthAct;
 import com.app.utif.android_simple_chat.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AuthAct {
     private ProgressBar mPbar;
     private RecyclerView mRecylerUsr;
 
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         showProgressBar();
 
         //set instance
-        mRef(); mAuth();
+        mRefUsr(); mAuth();
 
         //set supporting method
         setRecyclerUsr();
@@ -50,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         setAuthListener();
     }
 
-    public DatabaseReference mRef(){
+    public DatabaseReference mRefUsr(){
         return FirebaseDatabase.getInstance().getReference("users");
     }
 
@@ -145,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void queryingUsr() {
-        mRef().limitToFirst(100).addChildEventListener(mChildListener());
+        mRefUsr().limitToFirst(100).addChildEventListener(mChildListener());
     }
 
     private void clearCurrentUsr(){
@@ -154,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
 
         mAuth().addAuthStateListener(mAuthListener());
@@ -166,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
         clearCurrentUsr();
 
-        mRef().removeEventListener(mChildListener());
+        mRefUsr().removeEventListener(mChildListener());
         mAuth().removeAuthStateListener(mAuthListener());
         /*if (mChildListener() != null){
         }
@@ -182,5 +185,25 @@ public class MainActivity extends AppCompatActivity {
         if(mPbar.getVisibility()==View.VISIBLE) {
             mPbar.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_login, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.item_login:
+                signIn();
+                break;
+            case R.id.item_logout:
+                signOut();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
