@@ -55,13 +55,18 @@ public class AdapterUsr extends RecyclerView.Adapter<AdapterUsr.ViewHolderUsr>{
         return mUserList.size();
     }
 
-    public void setCurrenUsr(String uid, Long time){
+    public void setCurrentUsr(String uid, Long time){
         mUid = uid;
         mTime = time;
     }
 
     public void refill(User model){
         mUserList.add(model);
+        notifyDataSetChanged();
+    }
+
+    public void changeUsr(int index, User model){
+        mUserList.add(index, model);
         notifyDataSetChanged();
     }
 
