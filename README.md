@@ -5,6 +5,8 @@
 
  ## TODO
  * [x] connect to firebase
- * [] add all the supporting dependencies
- * [] create all the Activity
+ * [x] add all the supporting dependencies
+ * [x] add create models
+ * [x] add create adapters
+ * [] create all the Activities
  * [] build and run the project

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Android_simple_chat</string>
+    <string name="msgTitle">Title</string>
 </resources>
